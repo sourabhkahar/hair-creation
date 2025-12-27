@@ -21,7 +21,6 @@ const onSubmitLogin = handleSubmit( async(values) => {
     isLoading.value = true;
     const res = await logIn(values.email, values.password);
     if (!res.code) {
-        console.log(res);
         const payload = {
             name: res.user.email,
             token: res.accessToken,

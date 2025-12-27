@@ -1,23 +1,28 @@
 <script setup>
 import {
+    onMounted,
     ref
 } from 'vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import Navigation from '@/components/user/Navigation.vue';
-
+import { getAllArtistsWithServices } from '@/api/artists'
+import config from '@/config';
+const artistData = ref([])
 dayjs.extend(relativeTime);
 const year = ref(dayjs().year());
-const isMenuOpen = ref(false);
-const toggleMenu = () => {
-    isMenuOpen.value = !isMenuOpen.value;
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (isMenuOpen.value) {
-        mobileMenu.classList.remove('hidden');
-    } else {
-        mobileMenu.classList.add('hidden');
-    }
-};
+
+onMounted(async()=>{
+    artistData.value = await getAllArtistsWithServices()
+})
+
+function getDesignation(item){
+    const designation =  config.designationOptions.find(designation => {
+        return designation.value == item 
+    });
+
+    return designation?designation.label:'-'
+}
 </script>
 
 <template>
@@ -43,198 +48,35 @@ const toggleMenu = () => {
     <section class="bg-black text-white py-20 px-6 ">
         <div class="grid gap-8 md:grid-cols-3">
             <!-- Pricing Card -->
-            <div class="relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
+             
+            <div v-for="(artist, index) in artistData" :key="index" class="relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
                 <!-- Circular Image -->
                 <div class="absolute -top-10">
-                    <img src="../assets/images/sourabh_profile.jpeg" alt="Plan Icon" class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover">
+                    <img src="../assets/images/default-avatar-icon.jpg" alt="Plan Icon" class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover">
                 </div>
 
                 <!-- Plan Type -->
                 <div class="mt-12">
                     <span class="bg-black text-white text-sm font-bold px-4 py-1 rounded-full">
-                        Emerging Stylist
+                       {{artist.artist.name}}
                     </span>
+                    <div class="text-center text-gray-400">
+                        {{getDesignation(artist.artist.designation)}}
+                    </div>
                 </div>
 
                 <!-- Description -->
                 <p class="mt-6 text-gray-300 text-center text-sm">
-                    Test-drive all infrastructure solutions for free.
-                    For individuals and teams exploring the power of RPC Fast APIs.
+                     {{artist.artist.description}}
                 </p>
 
                 <!-- Features -->
                 <div class="mt-8 text-sm w-full space-y-2 text-left">
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Ladies Haircut:</span><span>500</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Wash, Haircut and Blowdry:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Mini Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Partial Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Fullhead Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Balayage Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Lived in Blonde package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Global tint, haircut and blowdry:</span><span>1000</span>
+                    <p v-for="(service, serviceIndex) in artist.services " :key="serviceIndex" class="flex justify-between border-b border-gray-700 pb-1">
+                        <span>{{service.name}}:</span><span> ₹{{service.price}}</span>
                     </p>
                 </div>
             </div>
-
-            <div class="relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
-                <!-- Circular Image -->
-                <div class="absolute -top-10">
-                    <img src="../assets/images/sourabh_profile.jpeg" alt="Plan Icon" class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover">
-                </div>
-
-                <!-- Plan Type -->
-                <div class="mt-12">
-                    <span class="bg-black text-white text-sm font-bold px-4 py-1 rounded-full">
-                        Senior Stylist
-                    </span>
-                </div>
-
-                <!-- Description -->
-                <p class="mt-6 text-gray-300 text-center text-sm">
-                    Test-drive all infrastructure solutions for free.
-                    For individuals and teams exploring the power of RPC Fast APIs.
-                </p>
-
-                <!-- Features -->
-                <div class="mt-8 text-sm w-full space-y-2 text-left">
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Ladies Haircut:</span><span>500</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Wash, Haircut and Blowdry:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Mini Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Partial Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Fullhead Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Balayage Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Lived in Blonde package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Global tint, haircut and blowdry:</span><span>1000</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
-                <!-- Circular Image -->
-                <div class="absolute -top-10">
-                    <img src="../assets/images/sourabh_profile.jpeg" alt="Plan Icon" class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover">
-                </div>
-
-                <!-- Plan Type -->
-                <div class="mt-12">
-                    <span class="bg-black text-white text-sm font-bold px-4 py-1 rounded-full">
-                        Director
-                    </span>
-                </div>
-
-                <!-- Description -->
-                <p class="mt-6 text-gray-300 text-center text-sm">
-                    Test-drive all infrastructure solutions for free.
-                    For individuals and teams exploring the power of RPC Fast APIs.
-                </p>
-
-                <!-- Features -->
-                <div class="mt-8 text-sm w-full space-y-2 text-left">
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Ladies Haircut:</span><span>500</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Wash, Haircut and Blowdry:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Mini Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Partial Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Fullhead Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Balayage Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Lived in Blonde package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Global tint, haircut and blowdry:</span><span>1000</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
-                <!-- Circular Image -->
-                <div class="absolute -top-10">
-                    <img src="../assets/images/sourabh_profile.jpeg" alt="Plan Icon" class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover">
-                </div>
-
-                <!-- Plan Type -->
-                <div class="mt-12">
-                    <span class="bg-black text-white text-sm font-bold px-4 py-1 rounded-full">
-                        Director
-                    </span>
-                </div>
-
-                <!-- Description -->
-                <p class="mt-6 text-gray-300 text-center text-sm">
-                    Test-drive all infrastructure solutions for free.
-                    For individuals and teams exploring the power of RPC Fast APIs.
-                </p>
-
-                <!-- Features -->
-                <div class="mt-8 text-sm w-full space-y-2 text-left">
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Ladies Haircut:</span><span>500</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Wash, Haircut and Blowdry:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Mini Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Partial Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Fullhead Highlight Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Balayage Package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Lived in Blonde package:</span><span>1000</span>
-                    </p>
-                    <p class="flex justify-between border-b border-gray-700 pb-1">
-                        <span>Global tint, haircut and blowdry:</span><span>1000</span>
-                    </p>
-                </div>
-            </div>
-
         </div>
     </section>
 

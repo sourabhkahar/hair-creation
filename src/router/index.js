@@ -23,17 +23,47 @@ const router = createRouter({
       meta: { requiresAuth: true, name: 'Admin Dashboard' }
     },
     {
-      path: '/:pathMatch(.*)*', // This regex pattern catches all paths
+      path: '/admin/artists',
+      name: 'artists',
+      component: () => import('../views/artists/ArtistsPage.vue'),
+      meta: { requiresAuth: true, name: 'Artists' }
+    },
+    {
+      path: '/admin/artists/:id/edit',
+      name: 'artists-form-edit',
+      component: () => import('../views/artists/ArtistsFormEdit.vue'),
+      meta: { requiresAuth: true, name: 'Artists' }
+    },
+    {
+      path: '/admin/artists/add',
+      name: 'artists-form-add',
+      component: () => import('../views/artists/ArtistsFormAdd.vue'),
+      meta: { requiresAuth: true, name: 'Artists' }
+    },
+    {
+      //listing
+      path: '/admin/artists/:id/services',
+      name: 'artists-services',
+      component: () => import('../views/artists/services/ServicesPage.vue'),
+      meta: { requiresAuth: true, name: 'Artists Services' }
+    },
+    {
+      path: '/admin/artists/:id/services/add',
+      name: 'artists-services-add',
+      component: () => import('../views/artists/services/ServiceFormAdd.vue'),
+      meta: { requiresAuth: true, name: 'Artists Services Add' }
+    },
+    {
+      path: '/admin/artists/:id/services/:sid/edit',
+      name: 'artists-services-edit',
+      component: () => import('../views/artists/services/ServiceFormEdit.vue'),
+      meta: { requiresAuth: true, name: 'Artists Services Edit' }
+    },
+    {
+      path: '/:pathMatch(.*)*', 
       name: 'NotFound',
-      // component: NotFoundComponent, // A component to display a 404 page
-      redirect: '/login' // Redirect to login for any unmatched routes
+      redirect: '/login'
     }
-    // {
-    //   path: '/order-wallet',
-    //   name: 'order-wallet',
-    //   component: () => import('../views/OrderWallet.vue'),
-    //   meta: { requiresAuth: true, name: 'Order & Wallet' }
-    // },
   ],
 })
 

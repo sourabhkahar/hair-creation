@@ -1,5 +1,7 @@
-import { app } from './index.js';
-import { getAuth,  onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { app, db } from './index.js';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import {  doc, getDoc } from "firebase/firestore";
+
 const auth = getAuth(app);
 
 function isLoggedIn(callback) {
@@ -34,5 +36,15 @@ async function logOut() {
     }
 }
 
-export { isLoggedIn,logIn,logOut };
+async function getCurrentUser() {
+    const userRef = doc(db, "users", auth.currentUser.uid);
+    const docSnap = await getDoc(userRef)
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return {};
+    }
+}
+
+export { isLoggedIn, logIn, logOut, getCurrentUser };
 

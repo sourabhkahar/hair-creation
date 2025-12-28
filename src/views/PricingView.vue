@@ -13,6 +13,8 @@ import config from '@/config';
 import { useSettings } from '@/composables';
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import defaultAvatar from "@/assets/images/default-avatar-icon.jpg";
+
 gsap.registerPlugin(ScrollTrigger);
 const { settings } = useSettings()
 const artistData = ref([])
@@ -103,8 +105,9 @@ watch(isLoading, async (val) => {
             <div v-for="(artist, index) in artistData" :key="index"
                 class="pricing-card relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
                 <div class="absolute -top-10">
-                    <img src="../assets/images/default-avatar-icon.jpg" alt="Plan Icon"
-                        class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover">
+                    <img class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover"
+                                                                :src="artist.artist.image||defaultAvatar"
+                                                                alt="">
                 </div>
                 <div class="mt-12 text-center">
                     <span class="bg-black text-white text-sm font-bold px-4 py-1 rounded-full">

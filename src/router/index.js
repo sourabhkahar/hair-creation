@@ -3,7 +3,18 @@ import { isLoggedIn } from '@/api/auth.js';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/pricing', name: 'Pricing', component: import('../views/PricingView.vue') },
+    { 
+      path: '/', 
+      name: 'home', 
+      redirect: '/pricing',
+      meta: { requiresAuth: false},
+    },
+    { 
+      path: '/pricing', 
+      name: 'pricing', 
+      component: () => import('../views/PricingView.vue'),
+      meta: { requiresAuth: false}
+    },
     {
       path: '/login',
       name: 'login',
@@ -41,7 +52,6 @@ const router = createRouter({
       meta: { requiresAuth: true, name: 'Artists' }
     },
     {
-      //listing
       path: '/admin/artists/:id/services',
       name: 'artists-services',
       component: () => import('../views/artists/services/ServicesPage.vue'),
@@ -58,6 +68,12 @@ const router = createRouter({
       name: 'artists-services-edit',
       component: () => import('../views/artists/services/ServiceFormEdit.vue'),
       meta: { requiresAuth: true, name: 'Artists Services Edit' }
+    },
+    {
+      path: '/admin/setting',
+      name: 'setting',
+      component: () => import('../views/site-setting/SiteSettingPage.vue'),
+      meta: { requiresAuth: true, name: 'Site Setting' }
     },
     {
       path: '/:pathMatch(.*)*', 

@@ -1,53 +1,68 @@
 <template>
-<aside id="sidebar" :class="[showSideBar?'block':'hidden','fixed  z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75']" aria-label="Sidebar">
-    <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
-        <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-            <div class="flex-1 px-3 bg-white divide-y space-y-1">
-                <ul class="space-y-2 pb-2">
-                    <!-- <li>
-                        <form action="#" method="GET" class="lg:hidden">
-                            <label for="mobile-search" class="sr-only">Search</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                                    </svg>
-                                </div>
-                                <input type="text" name="email" id="mobile-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:ring-cyan-600 block w-full pl-10 p-2.5" placeholder="Search">
-                            </div>
-                        </form>
-                    </li> -->
-                    <li>
-                        <RouterLink :to="{name:'admin-dashboard'}" class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
-                            <svg class="w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                            </svg>
-                            <span class="ml-3">Dashboard</span>
-                        </RouterLink>
-                    </li>
-                    <li>
-                        <RouterLink to="/admin/artists" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                             <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="ml-3 flex-1 whitespace-nowrap">Add Artists</span>
-                        </RouterLink>
-                    </li>
-                    <li>
-                        <a href="#" @click="logout" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                            <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="ml-3 flex-1 whitespace-nowrap">Sign Out</span>
-                        </a>
-                    </li>
-                </ul>
+    <aside id="sidebar"
+        :class="[ showSideBar ? 'block' : 'hidden', 'fixed  z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75' ]"
+        aria-label="Sidebar">
+        <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
+            <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+                <div class="flex-1 px-3 bg-white divide-y space-y-1">
+                    <ul class="space-y-2 pb-2">
+                        <li>
+                            <RouterLink :to="{ name: 'admin-dashboard' }"
+                                :class="[route.name == 'admin-dashboard'?'bg-gray-100':'','text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group']"
+                                @click="menuConfig.toggleMenu()">
+                                <svg :class="[route.name == 'admin-dashboard'?'text-gray-900':'','w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75']"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                </svg>
+                                <span class="ml-3">Dashboard</span>
+                            </RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink :to="{ name: 'artists' }"
+                                :class="[route.name == 'artists'?'bg-gray-100':'','text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group']" @click="menuConfig.toggleMenu()">
+                                <svg :class="[route.name == 'artists'?'text-gray-900':'','w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75']"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="ml-3 flex-1 whitespace-nowrap">Add Artists</span>
+                            </RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink :to="{ name: 'setting' }"
+                                :class="[route.name == 'setting'?'bg-gray-100':'','text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group']" @click="menuConfig.toggleMenu()">
+                                <svg :class="[route.name == 'setting'?'text-gray-900':'','w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75']"
+                                    fill="currentColor" height="30px" width="30px" viewBox="0 0 485 485"
+                                    xml:space="preserve">
+                                    <g>
+                                        <path
+                                            d="M485,287.5v-100h-66.946c-3.975-14.006-9.602-27.421-16.818-40.096l44.558-44.558l-70.711-70.711l-45.141,45.142   c-13.425-7.352-27.628-12.935-42.441-16.684V0h-100v63.446c-14.552,4.584-28.394,10.959-41.364,19.05l-43.29-43.29l-70.711,70.711   l46.716,46.716c-6.452,13.021-11.287,26.694-14.45,40.866H0v100h70.103c4.426,12.733,10.245,24.898,17.394,36.363l-48.291,48.291   l70.711,70.711l51.717-51.717c11.471,5.682,23.468,10.116,35.865,13.257V485h100v-73.449c12.211-3.851,23.95-8.975,35.095-15.317   l49.559,49.56l70.711-70.711l-50.143-50.143c6.506-11.89,11.635-24.416,15.332-37.439H485z M410.438,375.083l-28.285,28.284   l-45.379-45.38l-10.22,6.766c-14.623,9.681-30.646,16.698-47.624,20.859l-11.43,2.801V455h-40v-65.214l-12.331-2.23   c-17.205-3.111-33.615-9.125-48.775-17.875l-9.967-5.752l-46.509,46.509l-28.284-28.284l44.859-44.859l-7.517-10.362   c-10.678-14.721-18.552-31.023-23.401-48.453L92.519,267.5H30v-40h59.781l1.913-12.78c2.822-18.861,9.089-36.803,18.625-53.326   l5.752-9.967l-41.509-41.509l28.284-28.284l39.859,39.859l10.362-7.517c16.024-11.624,33.856-19.896,53.002-24.587l11.43-2.801V30   h40v55.214l12.331,2.23c19.427,3.513,37.743,10.684,54.44,21.314l10.152,6.463l40.659-40.659l28.284,28.284l-40.379,40.38   l6.765,10.22c10.565,15.96,17.935,33.514,21.902,52.174l2.526,11.88H455v40h-60.82l-2.525,11.881   c-3.775,17.758-10.643,34.544-20.413,49.891l-6.462,10.152L410.438,375.083z" />
+                                        <path
+                                            d="M242.5,135C185.981,135,140,180.981,140,237.5S185.981,340,242.5,340S345,294.019,345,237.5S299.019,135,242.5,135z    M242.5,310c-39.977,0-72.5-32.523-72.5-72.5s32.523-72.5,72.5-72.5s72.5,32.523,72.5,72.5S282.477,310,242.5,310z" />
+                                    </g>
+                                </svg>
+                                <span class="ml-3 flex-1 whitespace-nowrap">Site Setting</span>
+                            </RouterLink>
+                        </li>
+                        <li>
+                            <a href="#" @click="logout"
+                                class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="ml-3 flex-1 whitespace-nowrap">Sign Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</aside>
-<div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
+    </aside>
+    <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
 </template>
 
 <script setup>
@@ -64,7 +79,9 @@ import {
 import router from '@/router';
 import { menuToggle } from '@/composables';
 import { computed } from 'vue';
+import { useRoute } from 'vue-router'
 const menuConfig = menuToggle()
+const route = useRoute()
 async function logout() {
     const res = await logOut()
     storeUser.logout();
@@ -75,7 +92,7 @@ async function logout() {
         });
     }, 2000)
 }
-const showSideBar = computed(()=>{
+const showSideBar = computed(() => {
     return menuConfig.isSideBarOpen.value
 })
 </script>

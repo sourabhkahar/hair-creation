@@ -53,7 +53,6 @@ async function totalServices(artistsId) {
 async function getASingleServices(artist_id,id) {
     const docRef = doc(db, table2, artist_id, table, id);
     const docSnap = await getDoc(docRef);
-    console.log(docSnap);
     if (docSnap.exists()) {
         return docSnap.data();
     } else {
@@ -83,7 +82,6 @@ async function addServices(data,id) {
         }
         return await addDoc(collection(db, table2, id, table), payload);
     } catch (error) {
-        console.log(error)
         return false
     }
 }

@@ -24,7 +24,6 @@ const onSubmit = async() => {
     const { valid } = await validate();
     if (valid) {
         const res = await addServices(values,routeId)
-        console.log(res);
         if(res){
             toast.success('Services added successfully!');
             router.push({name:'artists-services',params:{

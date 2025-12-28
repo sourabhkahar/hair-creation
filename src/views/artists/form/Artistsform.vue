@@ -44,6 +44,5 @@ const { value: description } = useField('description');
             class="cursor-pointer bg-white text-black text-sm font-bold py-2 px-4 rounded-md border border-black hover:bg-gray-100 transition duration-300 flex justify-center">
             <span>Cancel</span>
         </RouterLink>
-
     </div>
 </template>

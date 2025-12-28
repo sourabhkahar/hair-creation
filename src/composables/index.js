@@ -1,7 +1,9 @@
-import { ref } from 'vue';
+import { ref,onMounted } from 'vue';
+import { documentSnapshots ,loadRecords  } from '@/api/site-setting';
 
 const isSideBarOpen = ref(false); 
-export function menuToggle() {
+const settings = ref([])
+function menuToggle() {
   function toggleMenu() {
     isSideBarOpen.value = !isSideBarOpen.value 
   }
@@ -10,4 +12,20 @@ export function menuToggle() {
     isSideBarOpen,
     toggleMenu
   };
+}
+
+function useSettings() {
+  onMounted(async()=>{
+    await loadRecords() 
+    settings.value = documentSnapshots
+  })
+  // Expose managed state and methods
+  return {
+    settings
+  };
+}
+
+export {
+  menuToggle,
+  useSettings,
 }

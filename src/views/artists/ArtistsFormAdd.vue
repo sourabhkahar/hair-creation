@@ -23,7 +23,6 @@ const onSubmit = async() => {
     const { valid } = await validate();
     if (valid) {
         const res = await addArtists(values)
-        console.log('kook',res)
         if(res){
             toast.success('Artist added successfully!');
             router.push({name:'artists'})

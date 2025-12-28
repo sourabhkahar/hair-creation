@@ -14,6 +14,5 @@ export default defineConfig({
   server:{
     host: true
   },
-  base: 'https://github.com/sourabhkahar/hair-creation.git',
 })
   

@@ -1,11 +1,12 @@
 <script setup>
-import Footer from '../../components/admin/Footer.vue';
-import Navigation from '../../components/admin/Navigation.vue';
-import SideBar from '../../components/admin/SideBar.vue';
+import Footer from '@/components/admin/Footer.vue';
+import Navigation from '@/components/admin/Navigation.vue';
+import SideBar from '@/components/admin/SideBar.vue';
 import { computed, onMounted, ref, shallowRef } from 'vue';
 import { documentSnapshots, getNextReords, lastVisible, loadRecords, perPage, totalArtists, getPreviousPage, cursorStack, serverTimestamp,updateArtists  } from '@/api/artists';
 import { useDebounceFn } from '@vueuse/core'
 import { toast } from 'vue3-toastify';
+import defaultAvatar from "@/assets/images/default-avatar-icon.jpg";
 
 const artistsData = ref([]);
 const totalRecs = ref(0);
@@ -157,7 +158,7 @@ async function deleteRecord() {
                                                     <div class="flex items-center">
                                                         <div class="h-10 w-10 flex-shrink-0">
                                                             <img class="h-10 w-10 rounded-full object-cover"
-                                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                                :src="artist.image||defaultAvatar"
                                                                 alt="">
                                                         </div>
                                                         <div class="ml-4">

@@ -2,11 +2,28 @@
 import { useFormErrors, useField } from 'vee-validate';
 import { ref } from 'vue';
 import config from '@/config.js';
-const isLoading = ref(false);
+const imagePreview = ref(null)
 const message = useFormErrors();
 const { value: name } = useField('name');
 const { value: designation } = useField('designation');
 const { value: description } = useField('description');
+const { value: image } = useField('image');
+
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  message.value.image = "";
+  if (!file) return;
+  image.value = file;
+  imagePreview.value = URL.createObjectURL(file);
+};
+
+defineProps({
+    isLoading:{
+        default:false,
+        type:Boolean
+    }
+})
+
 </script>
 <template>
     <div class="mb-4">
@@ -33,6 +50,28 @@ const { value: description } = useField('description');
             v-model="description"></textarea>
         <div class="text-red-500">{{ message.description }}</div>
     </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+            Image
+        </label>
+
+        <!-- File input -->
+        <input type="file" accept="image/*" class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0
+           file:text-sm file:font-semibold
+           file:bg-gray-100 file:text-black
+           hover:file:bg-gray-200 file:border border-black"  @change="handleFileChange" />
+
+        <!-- Preview -->
+        <div v-if="imagePreview || image" class="mt-3">
+            <img :src="imagePreview ? imagePreview:image" alt="Preview" class="h-32 w-32 object-cover rounded-md border" />
+        </div>
+
+        <!-- Error -->
+        <div class="text-red-500 text-sm mt-1">
+            {{ message.image }}
+        </div>
+    </div>
+
     <div class="flex items-center justify-start">
         <button
             :class="[ isLoading ? 'cursor-pointer-none' : 'cursor-pointer', ' bg-black text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-white border border-black hover:text-black transition duration-300 flex justify-center mr-2' ]"

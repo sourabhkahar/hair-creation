@@ -1,18 +1,30 @@
 <script setup>
-import Footer from '../../components/admin/Footer.vue';
-import Navigation from '../../components/admin/Navigation.vue';
-import SideBar from '../../components/admin/SideBar.vue';
+import Footer from '@/components/admin/Footer.vue';
+import Navigation from '@/components/admin/Navigation.vue';
+import SideBar from '@/components/admin/SideBar.vue';
 import Artistsform from './form/Artistsform.vue';
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 import { addArtists } from '@/api/artists';
-import router from '../../router';
+import router from '@/router';
 import { toast } from 'vue3-toastify';
+import { uploadArtistsImage } from '@/api/fileupload.js'
+
+const MAX_FILE_SIZE = 2097152;
+const validFileExtensions = { image: ['jpg', 'gif', 'png', 'jpeg', 'svg', 'webp'] };
+function isValidFileType(fileName, fileType) {
+  return fileName && validFileExtensions[fileType].indexOf(fileName.split('.').pop()) > -1;
+}
 
 let formSchema = yup.object({
     name: yup.string().required(),
     designation: yup.string().required(),
-    description: yup.string().nullable()
+    description: yup.string().nullable(),
+    image: yup.mixed().required("Required")
+    .test("is-valid-type", "Not a valid image type",
+      value => isValidFileType(value && value.name.toLowerCase(), "image"))
+    .test("is-valid-size", "Max allowed size is 100KB",
+      value => value && value.size <= MAX_FILE_SIZE)
 });
 
 const { validate, values, resetForm } = useForm({
@@ -22,7 +34,14 @@ const { validate, values, resetForm } = useForm({
 const onSubmit = async() => {
     const { valid } = await validate();
     if (valid) {
-        const res = await addArtists(values)
+
+        const resImage = await uploadArtistsImage(values.image)
+        const payLoad = {
+            ...values,
+            image:resImage
+        }
+
+        const res = await addArtists(payLoad)
         if(res){
             toast.success('Artist added successfully!');
             router.push({name:'artists'})

@@ -100,8 +100,6 @@ async function getAllArtistsWithServices() {
     }
     return result;
 }
-
-
 async function getArtistServices(artistId) {
   const q = query(
     collection(db, "artists", artistId, "services"),

@@ -31,27 +31,12 @@ onMounted(async () => {
     isLoading.value = true
     artistData.value = await getAllArtistsWithServices()
     isLoading.value = false
-
-    // gsap.from(".pricing-card", {
-    //     opacity: 0,
-    //     y: 60,
-    //     duration: 0.8,
-    //     ease: "power2.out",
-    //     stagger: 0.15,
-    //     scrollTrigger: {
-    //         trigger: ".pricing-card",
-    //         start: "top 80%",
-    //         toggleActions: "play reverse play reverse"
-    //     }
-    // });
 })
 
 watch(isLoading, async (val) => {
   if (val === false) {
     await nextTick(); 
-
     ScrollTrigger.getAll().forEach(t => t.kill());
-
     gsap.utils.toArray(".pricing-card").forEach((card) => {
       gsap.fromTo(
         card,
@@ -65,7 +50,7 @@ watch(isLoading, async (val) => {
             trigger: card,
             start: "top 85%",
             toggleActions: "play reverse play reverse",
-            markers: false // turn true if you want to debug
+            markers: false 
           }
         }
       );

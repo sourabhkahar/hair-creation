@@ -80,7 +80,7 @@ async function deleteRecord() {
         <SideBar />
         <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
             <main>
-                <div class="w-full flex items-center justify-center p-2">
+                <div class="w-full flex items-center justify-center p-2 pt-6 px-4">
                     <div class="container max-w-6xl">
                         <div class="bg-white rounded-xl shadow-md overflow-hidden">
                             <!-- Table Header -->
@@ -107,11 +107,11 @@ async function deleteRecord() {
                                                                 id: routeId
                                                             }
                                                         }"
-                                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-150 ease-in-out cursor-pointer mr-2">
+                                            class="bg-black hover:bg-white text-white hover:text-black border border-black font-medium py-2 px-4 rounded-lg transition duration-150 ease-in-out cursor-pointer mr-2">
                                             Add Services
                                         </RouterLink>
                                         <RouterLink :to="{ name: 'artists'}"
-                                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-150 ease-in-out cursor-pointer">
+                                            class="bg-black hover:bg-white text-white hover:text-black border border-black font-medium py-2 px-4 rounded-lg transition duration-150 ease-in-out cursor-pointer">
                                             Go Back
                                         </RouterLink>
                                     </div>

@@ -58,7 +58,7 @@ onMounted(async () => {
         <SideBar />
         <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
             <main>
-                <div class="w-full flex items-center justify-center p-2">
+                <div class="w-full flex items-center justify-center p-2 pt-6 px-4">
                     <div class="container max-w-6xl">
                         <div class="bg-white rounded-xl shadow-md overflow-hidden">
                             <div class="bg-white rounded-xl  overflow-hidden p-4 m-2">

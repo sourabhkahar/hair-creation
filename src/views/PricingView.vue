@@ -1,7 +1,9 @@
 <script setup>
 import {
+    nextTick,
     onMounted,
-    ref
+    ref,
+    watch
 } from 'vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -9,6 +11,9 @@ import Navigation from '@/components/user/Navigation.vue';
 import { getAllArtistsWithServices } from '@/api/artists'
 import config from '@/config';
 import { useSettings } from '@/composables';
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 const { settings } = useSettings()
 const artistData = ref([])
 const isLoading = ref(false)
@@ -26,7 +31,47 @@ onMounted(async () => {
     isLoading.value = true
     artistData.value = await getAllArtistsWithServices()
     isLoading.value = false
+
+    // gsap.from(".pricing-card", {
+    //     opacity: 0,
+    //     y: 60,
+    //     duration: 0.8,
+    //     ease: "power2.out",
+    //     stagger: 0.15,
+    //     scrollTrigger: {
+    //         trigger: ".pricing-card",
+    //         start: "top 80%",
+    //         toggleActions: "play reverse play reverse"
+    //     }
+    // });
 })
+
+watch(isLoading, async (val) => {
+  if (val === false) {
+    await nextTick(); 
+
+    ScrollTrigger.getAll().forEach(t => t.kill());
+
+    gsap.utils.toArray(".pricing-card").forEach((card) => {
+      gsap.fromTo(
+        card,
+        { opacity: 0, y: 60 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+            markers: false // turn true if you want to debug
+          }
+        }
+      );
+    });
+  }
+});
 </script>
 
 <template>
@@ -48,52 +93,52 @@ onMounted(async () => {
     </section>
 
     <section class="bg-black text-white py-20 px-6 ">
-        <div class="grid gap-8 md:grid-cols-3">
-            <template v-if="isLoading">
-                <div
-                    class="relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700  p-8 min-h-[280px] flex flex-col items-center justify-center">
-                    <!-- Avatar -->
-                    <div class="absolute -top-10">
-                        <img src="../assets/images/default-avatar-icon.jpg" alt="Plan Icon"
-                            class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover" />
-                    </div>
+        <div v-show="isLoading" class="grid gap-8 md:grid-cols-3">
+            <div></div>
+            <div class="pricing-card relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700  p-8 min-h-[280px] flex flex-col items-center justify-center">
+                <!-- Avatar -->
+                <div class="absolute -top-10">
+                    <img src="../assets/images/default-avatar-icon.jpg" alt="Plan Icon"
+                        class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover" />
+                </div>
 
-                    <!-- Skeleton -->
-                    <div class="animate-pulse mt-12 w-full max-w-xs text-center space-y-4">
-                        <div class="h-4 bg-gray-200 rounded-full w-32 mx-auto"></div>
+                <!-- Skeleton -->
+                <div class="animate-pulse mt-12 w-full max-w-xs text-center space-y-4">
+                    <div class="h-4 bg-gray-200 rounded-full w-32 mx-auto"></div>
 
-                        <div class="h-3 bg-gray-200 rounded w-40 mx-auto"></div>
+                    <div class="h-3 bg-gray-200 rounded w-40 mx-auto"></div>
 
-                        <div class="h-3 bg-gray-200 rounded w-48 mx-auto mt-4"></div>
+                    <div class="h-3 bg-gray-200 rounded w-48 mx-auto mt-4"></div>
+                </div>
+            </div>
+            <div></div>
+
+        </div>
+        <div v-show="!isLoading" class="grid gap-8 md:grid-cols-3">
+            <div v-for="(artist, index) in artistData" :key="index"
+                class="pricing-card relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
+                <div class="absolute -top-10">
+                    <img src="../assets/images/default-avatar-icon.jpg" alt="Plan Icon"
+                        class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover">
+                </div>
+                <div class="mt-12 text-center">
+                    <span class="bg-black text-white text-sm font-bold px-4 py-1 rounded-full">
+                        {{ artist.artist.name }}
+                    </span>
+                    <div class="text-center text-gray-400">
+                        {{ getDesignation(artist.artist.designation) }}
                     </div>
                 </div>
-            </template>
-            <template v-else>
-                <div v-for="(artist, index) in artistData" :key="index"
-                    class="relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
-                    <div class="absolute -top-10">
-                        <img src="../assets/images/default-avatar-icon.jpg" alt="Plan Icon"
-                            class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover">
-                    </div>
-                    <div class="mt-12">
-                        <span class="bg-black text-white text-sm font-bold px-4 py-1 rounded-full">
-                            {{ artist.artist.name }}
-                        </span>
-                        <div class="text-center text-gray-400">
-                            {{ getDesignation(artist.artist.designation) }}
-                        </div>
-                    </div>
-                    <p class="mt-6 text-gray-300 text-center text-sm">
-                        {{ artist.artist.description }}
+                <p class="mt-6 text-gray-300 text-center text-sm">
+                    {{ artist.artist.description }}
+                </p>
+                <div class="mt-8 text-sm w-full space-y-2 text-left">
+                    <p v-for="(service, serviceIndex) in artist.services" :key="serviceIndex"
+                        class="flex justify-between border-b border-gray-700 pb-1">
+                        <span>{{ service.name }}:</span><span> ₹{{ service.price }}</span>
                     </p>
-                    <div class="mt-8 text-sm w-full space-y-2 text-left">
-                        <p v-for="(service, serviceIndex) in artist.services" :key="serviceIndex"
-                            class="flex justify-between border-b border-gray-700 pb-1">
-                            <span>{{ service.name }}:</span><span> ₹{{ service.price }}</span>
-                        </p>
-                    </div>
                 </div>
-            </template>
+            </div>
         </div>
     </section>
 

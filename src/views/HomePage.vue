@@ -88,7 +88,7 @@ function toggelArtistsModal() {
             }" class="swiper mySwiper">
                 <SwiperSlide>
                     <div class="slide bg-cover bg-no-repeat bg-center relative w-full h-screen"
-                        style="background-image: url(../../images/hero1.jpg);">
+                        style="background-image: url(/images/hero1.jpg);">
                         <div class=" mx-auto w-full h-full px-2.5 md:px-5 lg:px-10 2xl:px-0 max-w-6xl">
                             <div class="flex items-center h-full pt-[60px]">
                                 <span
@@ -102,7 +102,7 @@ function toggelArtistsModal() {
                 <SwiperSlide>
                     <div>
                         <div class="slide bg-cover bg-no-repeat bg-center relative w-full h-screen"
-                            style="background-image: url(../../images/hero2.jpg);">
+                            style="background-image: url(/images/hero2.jpg);">
                             <div class="mx-auto w-full h-full px-2.5 md:px-5 lg:px-10 2xl:px-0 max-w-6xl">
                                 <div class="flex items-center h-full pt-[60px]">
                                     <span
@@ -211,7 +211,7 @@ function toggelArtistsModal() {
     </div>
 
     <div id="service" class="service-sec relative bg-cover bg-center py-12 pb-24 lg:py-24 text-white"
-        style="background-image: url(../../images/serv-bg.png);">
+        style="background-image: url(/images/serv-bg.png);">
         <div class="w-full max-w-7xl mx-auto px-6 lg:px-8">
             <div class="sec-title">
                 <h2 class="m-0 pb-12 text-4xl leading-10  capitalize font-bold text-center text-white relative z-20">
@@ -635,12 +635,12 @@ function toggelArtistsModal() {
                         class="grid grid-cols-1 lg:grid-cols-2 items-end justify-center relative w-full max-w-xl mx-auto lg:max-w-full">
                         <div class="left relative h-full z-[2]">
                             <div class="image h-[460px] relative lg:w-[650px]">
-                                <img loading="lazy" src="../../images/testi1.jpg" alt="">
+                                <img loading="lazy" src="/images/testi1.jpg" alt="">
                             </div>
                         </div>
                         <div class="right flex items-end justify-center relative -mt-14 mr-9">
                             <div class="inner relative h-[377px] bg-white w-full z-[2] p-6 pb-10 lg:p-10 lg:shd2">
-                                <img loading="lazy" src="../../images/quote.png" alt="" class="texti-quote">
+                                <img loading="lazy" src="/images/quote.png" alt="" class="texti-quote">
                                 <h3
                                     class="mt-9 mb-9 text-center text-2xl leading-8 font-bold tracking-widest text-black text-left sm:leading-10  my-6 lg:my-8">
                                     I just love
@@ -656,12 +656,12 @@ function toggelArtistsModal() {
                         class="grid grid-cols-1 lg:grid-cols-2 items-end justify-center relative w-full max-w-xl mx-auto lg:max-w-full">
                         <div class="left relative h-full z-[2]">
                             <div class="image h-[460px] relative lg:w-[650px]">
-                                <img loading="lazy" src="../../images/testi2.jpg" alt="">
+                                <img loading="lazy" src="/images/testi2.jpg" alt="">
                             </div>
                         </div>
                         <div class="right flex items-end justify-center relative -mt-14 mr-9">
                             <div class="inner relative h-[377px] bg-white w-full z-[2] p-6 pb-10 lg:p-10 lg:shd2">
-                                <img loading="lazy" src="../../images/quote.png" alt="" class="texti-quote">
+                                <img loading="lazy" src="/images/quote.png" alt="" class="texti-quote">
                                 <h3
                                     class="mt-9 mb-9 text-center text-2xl leading-8 font-bold tracking-widest text-black text-left sm:leading-10  my-6 lg:my-8">
                                     I just love
@@ -676,12 +676,12 @@ function toggelArtistsModal() {
                         class="grid grid-cols-1 lg:grid-cols-2 items-end justify-center relative w-full max-w-xl mx-auto lg:max-w-full">
                         <div class="left relative h-full z-[2]">
                             <div class="image h-[460px] relative lg:w-[650px]">
-                                <img loading="lazy" src="../../images/testi3.jpg" alt="">
+                                <img loading="lazy" src="/images/testi3.jpg" alt="">
                             </div>
                         </div>
                         <div class="right flex items-end justify-center relative -mt-14 mr-9">
                             <div class="inner relative h-[377px] bg-white w-full z-[2] p-6 pb-10 lg:p-10 lg:shd2">
-                                <img loading="lazy" src="../../images/quote.png" alt="" class="texti-quote">
+                                <img loading="lazy" src="/images/quote.png" alt="" class="texti-quote">
                                 <h3
                                     class="mt-9 mb-9 text-center text-2xl leading-8 font-bold tracking-widest text-black text-left sm:leading-10  my-6 lg:my-8">
                                     Totally

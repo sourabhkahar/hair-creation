@@ -1,5 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { isLoggedIn } from '@/api/auth.js';
+import gsap from 'gsap'
+import ScrollToPlugin from 'gsap/ScrollToPlugin'
+import { nextTick } from 'vue'
+
+gsap.registerPlugin(ScrollToPlugin)
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
@@ -93,6 +98,17 @@ router.beforeEach((to, from, next) => {
       next()
     }
   })
+})
+
+router.afterEach(async(to) => {
+  if (to.hash) {
+     await nextTick()
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: to.hash,
+      ease: 'power2.out'
+    })
+  }
 })
 
 export default router

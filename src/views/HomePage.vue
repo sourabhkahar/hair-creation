@@ -1,18 +1,20 @@
 <script setup>
-import {
-    nextTick,
-    onMounted,
-    ref,
-    watch
-} from 'vue';
+import { ref } from 'vue';
 import Nav from '@/components/user/Navigation.vue';
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Footer from '../components/user/Footer.vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Navigation, Pagination, Autoplay, Parallax } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay, Parallax, EffectFade } from 'swiper/modules';
 gsap.registerPlugin(ScrollTrigger);
-const modules = [ Navigation, Pagination, Autoplay, Parallax ];
+
+const pagination =  ref({
+          clickable: true,
+        //   renderBullet: function (index, className) {
+        //     return '<span class="' + className + '">' + (index + 1) + '</span>';
+        //   },
+        })
+const modules = [ Navigation, Pagination, Autoplay, Parallax, EffectFade ];
 import { useSettings } from '@/composables';
 const { settings } = useSettings()
 const activeArtists = ref(null);
@@ -189,7 +191,7 @@ function toggelArtistsModal() {
                 <div
                     class="about_left relative pt-10 lg:py-20 z-[2] before:contents[''] before:absolute before:top-0 before:right-0 before:bg-black before:h-full before:w-[286px] lg:before:block before:hidden">
                     <div class="relative lg:h-[517px] max-lg:mx-auto w-full lg:w-[630px]">
-                        <img loading="lazy" src="../../public/images/about-image.jpg" alt=""
+                        <img loading="lazy" src="/public/images/about-image.jpg" alt=""
                             class="w-full max-lg:mx-auto">
                     </div>
                 </div>
@@ -243,7 +245,7 @@ function toggelArtistsModal() {
                             </div>
                             <div
                                 class="max-lg:row-start-1 col-span-12 lg:col-span-7 flex justify-center lg:justify-end items-center lg:pr-24">
-                                <img loading="lazy" src="../../public/images/slider-img1.jpg" alt=""
+                                <img loading="lazy" src="/public/images/slider-img1.jpg" alt=""
                                     class="max-w-[590px] w-full">
                             </div>
                         </div>
@@ -265,7 +267,7 @@ function toggelArtistsModal() {
                             </div>
                             <div
                                 class="max-lg:row-start-1 col-span-12 lg:col-span-7 flex justify-center lg:justify-end items-center lg:pr-24">
-                                <img loading="lazy" src="../../public/images/slider-img1.jpg" alt=""
+                                <img loading="lazy" src="/images/slider-img1.jpg" alt=""
                                     class="max-w-[590px] w-full">
                             </div>
                         </div>
@@ -287,7 +289,7 @@ function toggelArtistsModal() {
                             </div>
                             <div
                                 class="max-lg:row-start-1 col-span-12 lg:col-span-7 flex justify-center lg:justify-end items-center lg:pr-24">
-                                <img loading="lazy" src="../../public/images/slider-img1.jpg" alt=""
+                                <img loading="lazy" src="/images/slider-img1.jpg" alt=""
                                     class="max-w-[590px] w-full">
                             </div>
                         </div>
@@ -309,7 +311,7 @@ function toggelArtistsModal() {
                             </div>
                             <div
                                 class="max-lg:row-start-1 col-span-12 lg:col-span-7 flex justify-center lg:justify-end items-center lg:pr-24">
-                                <img loading="lazy" src="../../public/images/slider-img1.jpg" alt=""
+                                <img loading="lazy" src="/images/slider-img1.jpg" alt=""
                                     class="max-w-[590px] w-full">
                             </div>
                         </div>
@@ -593,8 +595,7 @@ function toggelArtistsModal() {
                     <a href="www.youtube.com/embed/tFx6wt_gI3A?badge=0&amp;autoplay=1&amp;html5=1"
                         class="flex group justify-center items-center w-[122px] h-[122px] relative rounded-full bg-black z-[1] mx-auto after:transition-all after:duration-500 after:content-[' '] after:shadow-[0_0_0_5px_rgba(255,255,255,0.1)]  after:absolute after:w-full after:h-full after:rounded-full after:scale-75 after:opacity-0 after:p-3 after:-z-50 hover:after:scale-110 hover:after:opacity-100"
                         data-lity="">
-                        <div
-                            class="flex justify-center items-center w-full h-full rounded-full bg-white/20 transition-all duration-500 ease-linear">
+                        <div class="flex justify-center items-center w-full h-full rounded-full bg-white/20 transition-all duration-500 ease-linear">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="31" viewBox="0 0 30 31"
                                 fill="none">
                                 <path
@@ -606,7 +607,7 @@ function toggelArtistsModal() {
 
                 </div>
                 <div class="max-lg:row-start-1 col-span-12 lg:col-span-5">
-                    <div class="img relative lg:h-[540px] lg:w-[480px]">
+                    <div class="img relative ">
                         <img loading="lazy" src="/images/vdo.jpg" alt="" class="mx-auto lg:w-full lg:h-full">
                     </div>
                 </div>
@@ -626,15 +627,12 @@ function toggelArtistsModal() {
                     640: { slidesPerView: 1 },
                     768: { slidesPerView: 1 },
                     1024: { slidesPerView: 'auto', centeredSlides: true, }
-                }" :modules="modules" :navigation="{
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev'
-                }" parallax class="swiper testi-slider">
+                }" :modules="modules"  parallax class="swiper testi-slider" :pagination="pagination" effect="fade">
                 <SwiperSlide>
                     <div
                         class="grid grid-cols-1 lg:grid-cols-2 items-end justify-center relative w-full max-w-xl mx-auto lg:max-w-full">
                         <div class="left relative h-full z-[2]">
-                            <div class="image h-[460px] relative lg:w-[650px]">
+                            <div class="image md:h-[460px] relative lg:w-[650px]">
                                 <img loading="lazy" src="/images/testi1.jpg" alt="">
                             </div>
                         </div>
@@ -655,7 +653,7 @@ function toggelArtistsModal() {
                     <div
                         class="grid grid-cols-1 lg:grid-cols-2 items-end justify-center relative w-full max-w-xl mx-auto lg:max-w-full">
                         <div class="left relative h-full z-[2]">
-                            <div class="image h-[460px] relative lg:w-[650px]">
+                            <div class="image md:h-[460px] relative lg:w-[650px]">
                                 <img loading="lazy" src="/images/testi2.jpg" alt="">
                             </div>
                         </div>
@@ -675,7 +673,7 @@ function toggelArtistsModal() {
                     <div
                         class="grid grid-cols-1 lg:grid-cols-2 items-end justify-center relative w-full max-w-xl mx-auto lg:max-w-full">
                         <div class="left relative h-full z-[2]">
-                            <div class="image h-[460px] relative lg:w-[650px]">
+                            <div class="image md:h-[460px] relative lg:w-[650px]">
                                 <img loading="lazy" src="/images/testi3.jpg" alt="">
                             </div>
                         </div>
@@ -696,18 +694,18 @@ function toggelArtistsModal() {
     </div>
 
     <div id="contact"
-        class="contact-sec relative p-6 lg:pt-20 bg-gray before:absolute before:contents-[''] before:z-[0] before:left-0 before:top-0 before:h-[65%] before:w-full before:bg-bg_blk">
+        class="contact-sec relative p-6 lg:pt-20 bg-gray before:absolute before:contents-[''] before:z-[0] before:left-0 before:top-0 before:h-[65%] before:w-full before:bg-black">
         <div class=" w-full mx-auto z-[10] px-6 lg:px-8 max-w-7xl">
             <div class="grid grid-cols-1 lg:grid-cols-2 justify-center gap-y-6 gap-x-5 max-w-xl mx-auto lg:max-w-full">
                 <div class="flex justify-between flex-col ">
                     <div class="flex flex-col pb-5 lg:pb-14">
-                        <h2 class="title text-white z-10">book now</h2>
-                        <div class="single-item">
+                        <h2 class="m-0 pb-12 text-4xl leading-10  capitalize font-bold text-white relative z-20">book now</h2>
+                        <div class=" mb-2">
 
                             <ul class="w-full flex flex-col lg:flex-row gap-14 items-start  ">
                                 <li>
                                     <ul class="w-full flex gap-5 items-start ">
-                                        <li class="icon-box">
+                                        <li class="text-white">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                 viewBox="0 0 20 20" fill="none">
                                                 <path
@@ -716,22 +714,21 @@ function toggelArtistsModal() {
                                             </svg>
                                         </li>
                                         <li class="flex flex-col gap-y-3">
-                                            <div class="work-info text-sm font-normal z-10">Monday to Friday</div>
-                                            <div class="work-info text-sm font-normal z-10 whitespace-nowrap">Saturday &
+                                            <div class="text-white text-sm font-normal z-10">Monday to Friday</div>
+                                            <div class="text-white text-sm font-normal z-10 whitespace-nowrap">Saturday &
                                                 Sunday</div>
-
+                                        </li>
+                                        <li class="flex flex-col gap-y-3">
+                                            <div class="work-time z-10 text-sm font-normal whitespace-nowrap">10:00AM - 10:00PM
+                                            </div>
+                                            <div class="work-time z-10 text-sm font-normal">closed</div>
                                         </li>
                                     </ul>
-                                    <li class="flex flex-col gap-y-3">
-                                        <div class="work-time z-10 text-sm font-normal whitespace-nowrap">10:00AM - 10:00PM
-                                        </div>
-                                        <div class="work-time z-10 text-sm font-normal">closed</div>
-                                    </li>
                                 </li>
                             </ul>
                         </div>
-                        <div class="single-item flex">
-                            <div class="icon-box">
+                        <div class=" mb-2 flex">
+                            <div class="text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                     fill="none">
                                     <path
@@ -742,10 +739,10 @@ function toggelArtistsModal() {
                                         fill="black" />
                                 </svg>
                             </div>
-                            <div class="work-info text-base  pl-5 z-10">577 Taylor Street, West Nyack, New York </div>
+                            <div class="text-white text-base pl-5 z-10">577 Taylor Street, West Nyack, New York </div>
                         </div>
-                        <div class="single-item flex">
-                            <div class="icon-box">
+                        <div class=" mb-2 flex">
+                            <div class="text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                     fill="none">
                                     <path
@@ -759,7 +756,7 @@ function toggelArtistsModal() {
                                         stroke="white" stroke-width="1.33333" stroke-linecap="round" />
                                 </svg>
                             </div>
-                            <div class="work-info pl-5 z-10 text-base">3478-254-6833</div>
+                            <div class="text-white pl-5 z-10 text-base">3478-254-6833</div>
 
                         </div>
                     </div>
@@ -772,36 +769,49 @@ function toggelArtistsModal() {
                         </div>
                     </div>
                 </div>
-                <div class="left-form z-10 ">
+                <div class="z-10 bg-white py-16 px-5 shadow-md shadow-black/5 ">
                     <form class="flex flex-col gap-7 -mt-6">
                         <div class=" relative ">
-                            <label for="name" class="form-label font-poppins z-[100] relative uppercase">full
+                            <label for="name" class="absolute top-3 left-8 z-50 bg-white p-2.5 text-sm leading-5 font-medium tracking-wide text-[#878787] font-poppins z-[100] relative uppercase">full
                                 name</label>
-                            <input type="text" id="name" name="name" class="form-input " placeholder="Ex. john doi">
+                            <input type="text" id="name" name="name" class="h-20 w-full rounded-sm border border-[#dbdbdb] bg-transparent
+       py-5 px-10 font-[Poppins] text-base leading-6 font-normal text-[#171717] " placeholder="Ex. john doi">
                         </div>
                         <div class=" relative">
-                            <label for="phone" class="form-label font-poppins z-[100] relative uppercase">phone</label>
-                            <input type="phone" id="phone" name="phone" class="form-input "
+                            <label for="phone" class="absolute top-3 left-8 z-50 bg-white p-2.5 text-sm leading-5 font-medium tracking-wide text-[#878787] font-poppins z-[100] relative uppercase">phone</label>
+                            <input type="phone" id="phone" name="phone" class="h-20 w-full rounded-sm border border-[#dbdbdb] bg-transparent
+       py-5 px-10 font-[Poppins] text-base leading-6 font-normal text-[#171717] "
                                 placeholder="Type your number">
                         </div>
                         <div class=" relative">
-                            <label for="email" class="form-label font-poppins z-[100] relative uppercase">email</label>
-                            <input type="email" id="email" name="email" class="form-input " placeholder="Ex. john doi">
+                            <label for="email" class="absolute top-3 left-8 z-50 bg-white p-2.5 text-sm leading-5 font-medium tracking-wide text-[#878787] font-poppins z-[100] relative uppercase">email</label>
+                            <input type="email" id="email" name="email" class="h-20 w-full rounded-sm border border-[#dbdbdb] bg-transparent
+       py-5 px-10 font-[Poppins] text-base leading-6 font-normal text-[#171717] " placeholder="Ex. john doi">
                         </div>
-                        <div class=" relative flex flex-col gap-3 border border-[#DBDBDB] px-10 py-7 mt-5">
-                            <label for="service"
-                                class="form-label -top-5 w-max font-poppins z-[100] absolute uppercase">service</label>
-                            <select name="service" id="service" class="font-poppins font-normal text-base text-black">
-                                <option value="default">Choose your service</option>
-                                <option value="hair">Hair style</option>
-                                <option value="makeuo">Makeup</option>
+                        
+                        <div class="relative mt-5 flex flex-col gap-3 border border-[#DBDBDB] px-10 py-7">
+                            <label
+                                for="service"
+                                class="absolute -top-3 left-8 z-[100]
+                                    bg-white px-3 text-sm font-medium tracking-wide uppercase
+                                    text-[#878787] font-poppins">
+                                Service
+                            </label>
+                            <select
+                                name="service"
+                                id="service"
+                                class="font-poppins font-normal text-base text-black bg-transparent outline-none">
+                                <option value="">Choose your service</option>
+                                <option value="hair">Hair Style</option>
+                                <option value="makeup">Makeup</option>
                                 <option value="spa">Spa</option>
                             </select>
                         </div>
                         <div class=" relative">
                             <label for="datepicker"
-                                class="form-label font-poppins z-[100] relative uppercase">date</label>
-                            <input type="text" name="booking" class="form-input bg-transparent">
+                                class="absolute top-3 left-8 z-50 bg-white p-2.5 text-sm leading-5 font-medium tracking-wide text-[#878787] font-poppins z-[100] relative uppercase">date</label>
+                            <input type="text" name="booking" class="h-20 w-full rounded-sm border border-[#dbdbdb] bg-transparent
+       py-5 px-10 font-[Poppins] text-base leading-6 font-normal text-[#171717] bg-transparent">
 
                             <svg class="absolute top-1/2 right-8 cursor-pointer -z-2 pointer-events-none "
                                 xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
@@ -827,12 +837,13 @@ function toggelArtistsModal() {
                             </svg>
                         </div>
                         <div class=" relative">
-                            <label for="message" class="form-label font-poppins z-50 relative uppercase">message</label>
-                            <textarea name="message" id="message" cols="" rows="" class="form-input h-36 w-full"
+                            <label for="message" class="absolute top-3 left-8 z-50 bg-white p-2.5 text-sm leading-5 font-medium tracking-wide text-[#878787] font-poppins z-50 relative uppercase">message</label>
+                            <textarea name="message" id="message" cols="" rows="" class="h-20 w-full rounded-sm border border-[#dbdbdb] bg-transparent
+       py-5 px-10 font-[Poppins] text-base leading-6 font-normal text-[#171717] h-36 w-full"
                                 placeholder="Type your message"></textarea>
                         </div>
                         <div class=" relative ">
-                            <input type="submit" value="Book Now" class="box-btn">
+                            <input type="submit" value="Book Now" class="block h-16 w-full cursor-pointer rounded-none border- bg-black font-[Poppins] text-base leading-6 font-medium text-white outline-none transition-all duration-700 ease-in-out">
                         </div>
                     </form>
                 </div>

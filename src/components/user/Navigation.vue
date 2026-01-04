@@ -3,6 +3,16 @@ import { ref, watch } from 'vue'
 import { useSettings } from '@/composables';
 const { settings } = useSettings()
 const isMenuOpen = ref(false)
+const activeSection = ref('home')
+
+const navClick = function (section) {
+    activeSection.value = section
+    toggleMenu()
+}
+
+const toggleMenu = function () {
+    isMenuOpen.value = !isMenuOpen.value
+}
 
 watch(isMenuOpen, (val) => {
     document.body.style.overflow = val ? 'hidden' : ''
@@ -17,20 +27,26 @@ watch(isMenuOpen, (val) => {
         </div>
 
         <div class="space-x-8 flex text-white hidden md:block">
-            <router-link :to="{ path: '/', hash: '#home' }" @click="isMenuOpen = false" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
-          after:transition-all after:duration-300 after:ease-out hover:after:w-full" >Home</router-link>
-            <router-link :to="{ path: '/', hash: '#about' }" @click="isMenuOpen = false" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
-          after:transition-all after:duration-300 after:ease-out hover:after:w-full">About</router-link>
-            <router-link :to="{ path: '/', hash: '#services' }" @click="isMenuOpen = false" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
-          after:transition-all after:duration-300 after:ease-out hover:after:w-full">Services</router-link>
-            <router-link :to="{ path: '/', hash: '#our-experts' }" @click="isMenuOpen = false" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
-          after:transition-all after:duration-300 after:ease-out hover:after:w-full">Our Experts</router-link>
-            <router-link :to="{ path: '/', hash: '#testimonial' }" @click="isMenuOpen = false" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
-          after:transition-all after:duration-300 after:ease-out hover:after:w-full">Testimonials</router-link>
-            <router-link :to="{ path: '/pricing' }" @click="isMenuOpen = false" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
+            <router-link :to="{ path: '/', hash: '#home' }" @click="navClick('home')" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
+          after:transition-all after:duration-300 after:ease-out hover:after:w-full"
+                :class="{ 'border-b border-white': activeSection === 'home' }">Home</router-link>
+            <router-link :to="{ path: '/', hash: '#about' }" @click="navClick('about')" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
+          after:transition-all after:duration-300 after:ease-out hover:after:w-full"
+                :class="{ 'border-b border-white': activeSection === 'about' }">About</router-link>
+            <router-link :to="{ path: '/', hash: '#services' }" @click="navClick('services')" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
+          after:transition-all after:duration-300 after:ease-out hover:after:w-full"
+                :class="{ 'border-b border-white': activeSection === 'services' }">Services</router-link>
+            <router-link :to="{ path: '/', hash: '#our-experts' }" @click="navClick('our-experts')" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
+          after:transition-all after:duration-300 after:ease-out hover:after:w-full"
+                :class="{ 'border-b border-white': activeSection === 'our-experts' }">Our Experts</router-link>
+            <router-link :to="{ path: '/', hash: '#testimonials' }" @click="navClick('testimonials')" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
+          after:transition-all after:duration-300 after:ease-out hover:after:w-full"
+                :class="{ 'border-b border-white': activeSection === 'testimonials' }">Testimonials</router-link>
+            <router-link :to="{ path: '/pricing' }" @click="navClick('pricing')" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
           after:transition-all after:duration-300 after:ease-out hover:after:w-full">Pricing</router-link>
-            <router-link :to="{ path: '/', hash: '#contact' }" @click="isMenuOpen = false" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
-          after:transition-all after:duration-300 after:ease-out hover:after:w-full">Contact</router-link>
+            <router-link :to="{ path: '/', hash: '#contact' }" @click="navClick('contact')" class="relative inline-block after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-current
+          after:transition-all after:duration-300 after:ease-out hover:after:w-full"
+                :class="{ 'border-b border-white': activeSection === 'contact' }">Contact</router-link>
         </div>
         <!-- Social Icons -->
         <div class="hidden md:flex space-x-4">
@@ -59,17 +75,21 @@ watch(isMenuOpen, (val) => {
         <div v-if="isMenuOpen" class="fixed top-[72px] left-0 w-full bg-black z-40
             flex flex-col items-center space-y-6 py-8 text-white md:hidden">
 
-            <router-link :to="{ path: '/', hash: '#home' }" @click="isMenuOpen = false" class="">Home</router-link>
-            <router-link :to="{ path: '/', hash: '#about' }" @click="isMenuOpen = false" class="">About</router-link>
-            <router-link :to="{ path: '/', hash: '#services' }" @click="isMenuOpen = false"
-                class="">Services</router-link>
-            <router-link :to="{ path: '/', hash: '#our-experts' }" @click="isMenuOpen = false" class="">Our
+            <router-link :to="{ path: '/', hash: '#home' }" @click="navClick('home')"
+                :class="{ 'border-b border-white': activeSection === 'home' }">Home</router-link>
+            <router-link :to="{ path: '/', hash: '#about' }" @click="navClick('about')"
+                :class="{ 'border-b border-white': activeSection === 'about' }">About</router-link>
+            <router-link :to="{ path: '/', hash: '#services' }" @click="navClick('services')"
+                :class="{ 'border-b border-white': activeSection === 'services' }">Services</router-link>
+            <router-link :to="{ path: '/', hash: '#our-experts' }" @click="navClick('our-experts')"
+                :class="{ 'border-b border-white': activeSection === 'our-experts' }">Our
                 Experts</router-link>
-            <router-link :to="{ path: '/', hash: '#testimonials' }" @click="isMenuOpen = false"
-                class="">Testimonials</router-link>
-            <router-link :to="{ path: '/pricing' }" @click="isMenuOpen = false" class="">Pricing</router-link>
-            <router-link :to="{ path: '/', hash: '#contact' }" @click="isMenuOpen = false"
-                class="">Contact</router-link>
+            <router-link :to="{ path: '/', hash: '#testimonials' }" @click="navClick('testimonials')"
+                :class="{ 'border-b border-white': activeSection === 'testimonials' }">Testimonials</router-link>
+            <router-link :to="{ path: '/pricing' }" @click="navClick('pricing')"
+                :class="{ 'border-b border-white': activeSection === 'pricing' }">Pricing</router-link>
+            <router-link :to="{ path: '/', hash: '#contact' }" @click="navClick('contact')"
+                :class="{ 'border-b border-white': activeSection === 'contact' }">Contact</router-link>
 
             <!-- Social Icons -->
             <div class="flex space-x-6 pt-4">

@@ -6,7 +6,7 @@ const router = createRouter({
     { 
       path: '/', 
       name: 'home', 
-      redirect: '/pricing',
+      component: () => import('../views/HomePage.vue'),
       meta: { requiresAuth: false},
     },
     { 

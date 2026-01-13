@@ -34,30 +34,34 @@ onMounted(async () => {
     artistData.value = await getAllArtistsWithServices()
     isLoading.value = false
 })
-
+let pricingTriggers = []
 watch(isLoading, async (val) => {
-  if (val === false) {
-    await nextTick(); 
-    ScrollTrigger.getAll().forEach(t => t.kill());
-    gsap.utils.toArray(".pricing-card").forEach((card) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 60 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-            markers: false 
-          }
-        }
-      );
-    });
-  }
+    if (val === false) {
+        await nextTick();
+        pricingTriggers.forEach(t => t.kill())
+        pricingTriggers = []
+        
+        gsap.utils.toArray(".pricing-card").forEach((card) => {
+            gsap.fromTo(
+                card,
+                { opacity: 0, y: 60 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        scroller: '#app-scroll',
+                        start: "top 85%",
+                        toggleActions: "play reverse play reverse",
+                        markers: false,
+                    }
+                }
+            );
+        });
+        ScrollTrigger.refresh()
+    }
 });
 </script>
 
@@ -82,7 +86,8 @@ watch(isLoading, async (val) => {
     <section class="bg-black text-white py-20 px-6 ">
         <div v-show="isLoading" class="grid gap-8 md:grid-cols-3">
             <div></div>
-            <div class="pricing-card relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700  p-8 min-h-[280px] flex flex-col items-center justify-center">
+            <div
+                class="pricing-card relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700  p-8 min-h-[280px] flex flex-col items-center justify-center">
                 <!-- Avatar -->
                 <div class="absolute -top-10">
                     <img src="../assets/images/default-avatar-icon.jpg" alt="Plan Icon"
@@ -106,8 +111,7 @@ watch(isLoading, async (val) => {
                 class="pricing-card relative bg-neutral-900 text-white rounded-3xl shadow-lg border border-gray-700 p-8 flex flex-col items-center">
                 <div class="absolute -top-10">
                     <img class="w-20 h-20 rounded-full border-4 border-black shadow-lg object-cover"
-                                                                :src="artist.artist.image||defaultAvatar"
-                                                                alt="">
+                        :src="artist.artist.image || defaultAvatar" alt="">
                 </div>
                 <div class="mt-12 text-center">
                     <span class="bg-black text-white text-sm font-bold px-4 py-1 rounded-full">

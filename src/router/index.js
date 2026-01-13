@@ -103,7 +103,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(async(to) => {
   if (to.hash) {
      await nextTick()
-    gsap.to(window, {
+    gsap.to('#app-scroll', {
       duration: 1,
       scrollTo: to.hash,
       ease: 'power2.out'

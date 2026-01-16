@@ -6,10 +6,10 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [ vue(), tailwindcss(),
+  plugins: [vue(), tailwindcss(),
   VitePWA({
     registerType: 'autoUpdate',
-    includeAssets: [ 'favicon.svg', 'robots.txt' ],
+    includeAssets: ['favicon.svg', 'robots.txt'],
     manifest: {
       name: 'Hair Creation',
       short_name: 'HC',
@@ -28,6 +28,20 @@ export default defineConfig({
           src: '/pwa-512x512.png',
           sizes: '511x230',
           type: 'image/png'
+        }
+      ],
+      screenshots: [
+        {
+          src: "/mobile-1.png",
+          sizes: "746x1280",
+          type: "image/png",
+          form_factor: "narrow"
+        },
+        {
+          src: "/desktop-1.png",
+          sizes: "1898x1029",
+          type: "image/png",
+          form_factor: "wide"
         }
       ]
     }

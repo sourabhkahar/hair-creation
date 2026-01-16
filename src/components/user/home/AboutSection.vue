@@ -5,8 +5,7 @@
                 <div
                     class="about_left relative pt-10 lg:py-20 z-[2] before:contents[''] before:absolute before:top-0 before:right-0 before:bg-black before:h-full before:w-[286px] lg:before:block before:hidden">
                     <div class="relative lg:h-[517px] max-lg:mx-auto w-full lg:w-[630px]">
-                        <img loading="lazy" src="/public/images/about-image.jpg" alt=""
-                            class="w-full max-lg:mx-auto">
+                        <img loading="lazy" src="/images/about-image.jpg" alt="" class="w-full max-lg:mx-auto">
                     </div>
                 </div>
                 <div class="about-right relative lg:py-20 flex items-center justify-center max-lg:pr-9">

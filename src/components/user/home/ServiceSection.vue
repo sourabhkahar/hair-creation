@@ -37,7 +37,7 @@ const modules = [ Navigation, Pagination, Autoplay, Parallax, EffectFade ];
                             </div>
                             <div
                                 class="max-lg:row-start-1 col-span-12 lg:col-span-7 flex justify-center lg:justify-end items-center lg:pr-24">
-                                <img loading="lazy" src="/public/images/slider-img1.jpg" alt=""
+                                <img loading="lazy" src="/images/slider-img1.jpg" alt=""
                                     class="max-w-[590px] w-full">
                             </div>
                         </div>
